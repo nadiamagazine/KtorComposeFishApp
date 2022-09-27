@@ -56,7 +56,7 @@ fun Fish(
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(speciesName.speciesIllustrationPhoto)
+                .data(speciesName.speciesIllustrationPhoto?.src)
                 .crossfade(true)
                 .build(),
             placeholder = painterResource(R.drawable.ic_launcher_foreground),
