@@ -5,10 +5,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,7 +25,11 @@ internal fun SpeciesListScreen(
 ) {
     val viewState = viewModel.liveData.observeAsState()
 
-    viewState.value?.let { FishList(listOfFish = it) }
+    if (viewState.value == null) {
+        ProgressIndicator()
+    } else {
+        viewState.value?.let { FishList(listOfFish = it) }
+    }
 }
 
 @Composable
@@ -29,15 +37,14 @@ fun Fish(
     speciesName: SpeciesName
 ) {
     Card(
-        modifier = androidx.compose.ui.Modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp, 4.dp)
             .height(110.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp
     ) {
-        Row(
-            androidx.compose.ui.Modifier
+        Column(Modifier
                 .padding(4.dp)
                 .fillMaxSize()
         ) {
@@ -46,17 +53,46 @@ fun Fish(
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.Bold
             )
+            Text(
+                text = speciesName.harvestType,
+                style = MaterialTheme.typography.body2,
+                fontWeight = FontWeight.Normal
+            )
+            speciesName.habitatImpacts?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.body2,
+                    fontWeight = FontWeight.Normal
+                )
+            }
         }
     }
 }
 
 @Composable
 fun FishList(
-    listOfFish: List<SpeciesName>) {
+    listOfFish: List<SpeciesName>
+) {
     LazyColumn {
         itemsIndexed(items = listOfFish) { index, item ->
             Fish(speciesName = item)
         }
+    }
+}
+
+@Composable
+fun ProgressIndicator() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .size(100.dp)
+                .align(Alignment.Center),
+            color = Color.Blue,
+            strokeWidth = 10.dp
+        )
     }
 }
 
