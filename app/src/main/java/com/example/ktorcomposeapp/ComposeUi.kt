@@ -5,21 +5,29 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.ktorcomposeapp.ui.theme.KtorComposeAppTheme
@@ -34,7 +42,10 @@ internal fun SpeciesListScreen(
     if (viewState.value == null) {
         ProgressIndicator()
     } else {
-        viewState.value?.let { FishList(listOfFish = it) }
+        Column {
+            SearchField(state = remember { mutableStateOf(TextFieldValue("")) })
+            viewState.value?.let { FishList(listOfFish = it) }
+        }
     }
 }
 
@@ -120,10 +131,70 @@ fun ProgressIndicator() {
     }
 }
 
+@Composable
+fun SearchField(
+    state: MutableState<TextFieldValue>
+) {
+    TextField(
+        value = state.value,
+        onValueChange = { value ->
+            state.value = value
+        },
+        modifier = Modifier
+            .fillMaxWidth(),
+        textStyle = TextStyle(
+            color = Color.White, fontSize = 20.sp
+        ),
+        leadingIcon = {
+            Icon(
+                Icons.Default.Search,
+                contentDescription = "",
+                modifier = Modifier
+                    .padding(15.dp)
+                    .size(25.dp)
+            )
+        },
+        trailingIcon = {
+            if (state.value != TextFieldValue(""))
+                IconButton(onClick = {
+                    state.value = TextFieldValue("")
+                }
+                ) {
+                    Icon(
+                        Icons.Default.Close,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(15.dp)
+                            .size(25.dp)
+                    )
+                }
+        },
+        singleLine = true,
+        shape = RectangleShape,
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color.White,
+            cursorColor = Color.White,
+            leadingIconColor = Color.White,
+            trailingIconColor = Color.White,
+            backgroundColor = colorResource(id = R.color.black),
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     KtorComposeAppTheme {
         FishList(listOfFish = listOf())
     }
+}
+
+@Preview
+@Composable
+fun SearchFieldPreview() {
+    val textState = remember { mutableStateOf(TextFieldValue("")) }
+    SearchField(textState)
 }
