@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.ktorcomposeapp.model.SpeciesResponse
 import com.example.ktorcomposeapp.ui.theme.KtorComposeAppTheme
 import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
 
@@ -51,7 +52,7 @@ internal fun SpeciesListScreen(
 
 @Composable
 fun Fish(
-    speciesName: SpeciesName
+    speciesName: SpeciesResponse
 ) {
     Card(
         modifier = Modifier
@@ -106,7 +107,7 @@ fun Fish(
 
 @Composable
 fun FishList(
-    listOfFish: List<SpeciesName>
+    listOfFish: List<SpeciesResponse>
 ) {
     LazyColumn {
         itemsIndexed(items = listOfFish) { index, item ->
@@ -140,8 +141,7 @@ fun SearchField(
         onValueChange = { value ->
             state.value = value
         },
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         textStyle = TextStyle(
             color = Color.White, fontSize = 20.sp
         ),
