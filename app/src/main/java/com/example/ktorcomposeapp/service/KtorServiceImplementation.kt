@@ -15,6 +15,7 @@ class KtorServiceImplementation(
             client.get("https://www.fishwatch.gov/api/species").body()
         } catch(e: RedirectResponseException) {
             // 3xx - responses
+            // android.util.log.d("tag", )
             println("Error: ${e.response.status.description}")
             emptyList()
         } catch(e: ClientRequestException) {
@@ -31,3 +32,5 @@ class KtorServiceImplementation(
         }
     }
 }
+
+// timbr to use for logging
