@@ -16,18 +16,18 @@ class KtorServiceImplementation(
             client.get("https://www.fishwatch.gov/api/species").body()
         } catch(e: RedirectResponseException) {
             // 3xx - responses
-            Timber.i("Error: ${e.response.status.description}")
+            Timber.d("Error: ${e.response.status.description}")
             emptyList()
         } catch(e: ClientRequestException) {
             // 4xx - responses
-            Timber.i("Error: ${e.response.status.description}")
+            Timber.d("Error: ${e.response.status.description}")
             emptyList()
         } catch(e: ServerResponseException) {
             // 5xx - responses
-            Timber.i("Error: ${e.response.status.description}")
+            Timber.d("Error: ${e.response.status.description}")
             emptyList()
         } catch(e: Exception) {
-            Timber.i("Error: ${e.message}")
+            Timber.d("Error: ${e.message}")
             emptyList()
         }
     }
