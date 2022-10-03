@@ -52,5 +52,3 @@ class SpeciesViewModel : ViewModel() {
         }
     }
 }
-// filter the list for search field
-// when typing live data is going to observe first 2 characters matching speciesName
