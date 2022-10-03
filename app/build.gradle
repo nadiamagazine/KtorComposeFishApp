@@ -87,4 +87,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0"
     // Coil
     implementation "io.coil-kt:coil-compose:2.2.1"
+
+    // Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }

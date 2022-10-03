@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.ktorcomposeapp.ui.theme.KtorComposeAppTheme
 import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
     private val viewModel: SpeciesViewModel by viewModels()
@@ -23,5 +24,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             viewModel.getSpeciesName()
         }
+
+        Timber.plant(Timber.DebugTree())
     }
 }
