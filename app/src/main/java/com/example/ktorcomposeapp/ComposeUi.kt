@@ -1,5 +1,6 @@
 package com.example.ktorcomposeapp
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,10 +18,12 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -46,6 +49,14 @@ internal fun SpeciesListScreen(
         ProgressIndicator()
     } else {
         Column {
+            Image(
+                painter = painterResource(id = R.drawable.ic_encyclopedia_fishing),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(CenterHorizontally),
+                contentScale = ContentScale.Crop
+            )
             Spacer(modifier = Modifier.height(20.dp))
             SearchField(state = remember { mutableStateOf(TextFieldValue("")) })
             viewState.value?.let { FishList(listOfFish = it) }
@@ -140,7 +151,8 @@ fun SearchField(
     state: MutableState<TextFieldValue>
 ) {
     Box(
-        modifier = Modifier.fillMaxWidth())
+        modifier = Modifier.fillMaxWidth()
+    )
     {
         TextField(
             value = state.value,
