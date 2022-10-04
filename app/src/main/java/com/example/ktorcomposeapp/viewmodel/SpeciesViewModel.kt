@@ -33,7 +33,7 @@ class SpeciesViewModel : ViewModel() {
        } else {
            cachedSpeciesList
        }
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.Main) {
             if (query.isEmpty()) {
                 _liveData.value = cachedSpeciesList
                 isSearching.value = false

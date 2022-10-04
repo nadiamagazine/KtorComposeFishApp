@@ -39,7 +39,6 @@ internal fun SpeciesListScreen(
     viewModel: SpeciesViewModel
 ) {
     val viewState = viewModel.liveData.observeAsState()
-    val isSearching by remember { viewModel.isSearching }
 
     if (viewState.value == null) {
         ProgressIndicator()
@@ -57,7 +56,7 @@ internal fun SpeciesListScreen(
             SearchField {
                 viewModel.filterListOfSpecies(it)
             }
-            viewState.value?.let { FishList(listOfFish = it) }
+                viewState.value?.let { FishList(listOfFish = it) }
         }
     }
 }
@@ -148,7 +147,7 @@ fun ProgressIndicator() {
 fun SearchField(
     onSearch: (String) -> Unit = {}
 ) {
-    var state = remember {
+    val state = remember {
         mutableStateOf("")
     }
     Box(
@@ -195,7 +194,6 @@ fun SearchField(
             singleLine = true
         )
     }
-
 }
 
 @Preview(showBackground = true)
