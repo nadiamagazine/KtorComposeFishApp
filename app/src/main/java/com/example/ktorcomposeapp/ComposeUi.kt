@@ -12,11 +12,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -28,7 +25,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,7 +39,7 @@ internal fun SpeciesListScreen(
     viewModel: SpeciesViewModel
 ) {
     val viewState = viewModel.liveData.observeAsState()
-//    val isSearching by remember { viewModel.isSearching }
+    val isSearching by remember { viewModel.isSearching }
 
     if (viewState.value == null) {
         ProgressIndicator()
@@ -58,7 +54,9 @@ internal fun SpeciesListScreen(
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(20.dp))
-            SearchField(state = remember { mutableStateOf(TextFieldValue("")) })
+            SearchField {
+                viewModel.filterListOfSpecies(it)
+            }
             viewState.value?.let { FishList(listOfFish = it) }
         }
     }
@@ -148,8 +146,11 @@ fun ProgressIndicator() {
 
 @Composable
 fun SearchField(
-    state: MutableState<TextFieldValue>
+    onSearch: (String) -> Unit = {}
 ) {
+    var state = remember {
+        mutableStateOf("")
+    }
     Box(
         modifier = Modifier.fillMaxWidth()
     )
@@ -158,6 +159,7 @@ fun SearchField(
             value = state.value,
             onValueChange = { value ->
                 state.value = value
+                onSearch(value)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -176,9 +178,9 @@ fun SearchField(
                 )
             },
             trailingIcon = {
-                if (state.value != TextFieldValue(""))
+                if (state.value != "")
                     IconButton(onClick = {
-                        state.value = TextFieldValue("")
+                        state.value = ""
                     }
                     ) {
                         Icon(
@@ -202,11 +204,4 @@ fun DefaultPreview() {
     KtorComposeAppTheme {
         FishList(listOfFish = listOf())
     }
-}
-
-@Preview
-@Composable
-fun SearchFieldPreview() {
-    val textState = remember { mutableStateOf(TextFieldValue("")) }
-    SearchField(textState)
 }
