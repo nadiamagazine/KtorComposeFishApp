@@ -4,7 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.remember
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.ktorcomposeapp.ui.theme.KtorComposeAppTheme
 import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
 import kotlinx.coroutines.launch
@@ -18,7 +24,27 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             KtorComposeAppTheme {
-                SpeciesListScreen(viewModel)
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = "species_list_screen"
+                ) {
+                    composable("species_list_screen/{speciesName}") {
+                        SpeciesListScreen(viewModel)
+                    }
+                    composable("species_detail_screen",
+                        arguments = listOf(
+                            navArgument("speciesName")
+                            {
+                                type = NavType.StringType
+                            }
+                        )
+                    ) {
+                        val speciesName = remember {
+                            it.arguments?.getString("speciesName")
+                        }
+                    }
+                }
             }
         }
         lifecycleScope.launch {
