@@ -24,7 +24,6 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             viewModel.getSpeciesName()
         }
-
         Timber.plant(Timber.DebugTree())
     }
 }
