@@ -2,6 +2,7 @@ package com.example.ktorcomposeapp
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -12,8 +13,10 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -25,17 +28,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.ktorcomposeapp.model.SpeciesResponse
-import com.example.ktorcomposeapp.ui.theme.KtorComposeAppTheme
 import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
 
 @Composable
 internal fun SpeciesListScreen(
+    navController: NavController,
     viewModel: SpeciesViewModel
 ) {
     val viewState = viewModel.liveData.observeAsState()
@@ -56,23 +59,31 @@ internal fun SpeciesListScreen(
             SearchField {
                 viewModel.filterListOfSpecies(it)
             }
-                viewState.value?.let { FishList(listOfFish = it) }
+                viewState.value?.let { FishList(
+                    navController = navController,
+                    listOfFish = it) }
         }
     }
 }
 
 @Composable
 fun Fish(
+    navController: NavController,
     speciesName: SpeciesResponse
 ) {
     Card(
         modifier = Modifier
             .fillMaxSize()
-            .padding(8.dp, 4.dp),
+            .padding(8.dp, 4.dp)
+            .clickable {
+                navController.navigate(
+                    "species_details_screen/${speciesName.speciesName}"
+                )
+            },
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp
     ) {
-        Row(
+        Column(
             Modifier
                 .padding(4.dp)
                 .fillMaxSize()
@@ -89,40 +100,68 @@ fun Fish(
                     .size(85.dp)
                     .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
             )
-            Column(
-                Modifier
-                    .padding(4.dp)
-            ) {
-                Text(
-                    text = speciesName.speciesName,
-                    style = MaterialTheme.typography.body1,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = speciesName.harvestType,
-                    style = MaterialTheme.typography.body2,
-                    fontWeight = FontWeight.Normal
-                )
-
-                speciesName.habitatImpacts?.let {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.body2,
-                        fontWeight = FontWeight.Normal
-                    )
-                }
-            }
+//            Column(
+//                Modifier
+//                    .padding(4.dp)
+//            ) {
+            Text(
+                text = speciesName.speciesName,
+                style = MaterialTheme.typography.body1,
+                fontWeight = FontWeight.Bold
+            )
+//                Text(
+//                    text = speciesName.harvestType,
+//                    style = MaterialTheme.typography.body2,
+//                    fontWeight = FontWeight.Normal
+//                )
+//
+//                speciesName.habitatImpacts?.let {
+//                    Text(
+//                        text = it,
+//                        style = MaterialTheme.typography.body2,
+//                        fontWeight = FontWeight.Normal
+//                    )
+//                }
+//            }
         }
     }
 }
 
+//@Composable
+//fun FishRow(
+//    rowIndex: Int,
+//    navController: NavController,
+//    speciesName: List<SpeciesResponse>
+//) {
+//    Column {
+//        Row {
+//            Fish(
+//                navController = navController,
+//                speciesName = speciesName[rowIndex * 2]
+//            )
+//            Spacer(modifier = Modifier.width(16.dp))
+//            if (speciesName.size >= rowIndex * 2 + 2) {
+//                Fish(
+//                    navController = navController,
+//                    speciesName = speciesName[rowIndex * 2]
+//                )
+//            } else {
+//                Spacer(modifier = Modifier.weight(1f))
+//            }
+//        }
+//    }
+//}
+
 @Composable
 fun FishList(
+    navController: NavController,
     listOfFish: List<SpeciesResponse>
 ) {
     LazyColumn {
         itemsIndexed(items = listOfFish) { index, item ->
-            Fish(speciesName = item)
+            Fish(
+                navController = navController,
+                speciesName = item)
         }
     }
 }
@@ -193,13 +232,5 @@ fun SearchField(
             },
             singleLine = true
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    KtorComposeAppTheme {
-        FishList(listOfFish = listOf())
     }
 }

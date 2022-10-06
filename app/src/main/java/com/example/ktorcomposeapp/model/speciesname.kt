@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SpeciesResponse(
     @SerialName("Species Name") val speciesName: String,
-    @SerialName("Harvest Type") val harvestType: String,
-    @SerialName("Habitat Impacts") val habitatImpacts: String?,
+//    @SerialName("Harvest Type") val harvestType: String,
+//    @SerialName("Habitat Impacts") val habitatImpacts: String?,
     @SerialName("Species Illustration Photo") val speciesIllustrationPhoto: SpeciesIllustrationImage?
 )
 

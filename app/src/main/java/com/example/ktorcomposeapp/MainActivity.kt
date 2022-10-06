@@ -29,8 +29,8 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = "species_list_screen"
                 ) {
-                    composable("species_list_screen/{speciesName}") {
-                        SpeciesListScreen(viewModel)
+                    composable("species_list_screen/{SpeciesResponse}") {
+                        SpeciesListScreen(navController, viewModel)
                     }
                     composable("species_detail_screen",
                         arguments = listOf(
