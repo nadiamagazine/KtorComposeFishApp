@@ -77,7 +77,7 @@ fun Fish(
             .padding(8.dp, 4.dp)
             .clickable {
                 navController.navigate(
-                    "species_details_screen/${speciesName.speciesName}"
+                    "SpeciesDetailScreen/${speciesName.speciesName}"
                 )
             },
         shape = RoundedCornerShape(8.dp),
