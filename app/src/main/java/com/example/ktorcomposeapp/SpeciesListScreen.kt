@@ -59,9 +59,12 @@ internal fun SpeciesListScreen(
             SearchField {
                 viewModel.filterListOfSpecies(it)
             }
-                viewState.value?.let { FishList(
+            viewState.value?.let {
+                FishList(
                     navController = navController,
-                    listOfFish = it) }
+                    listOfFish = it
+                )
+            }
         }
     }
 }
@@ -100,57 +103,14 @@ fun Fish(
                     .size(85.dp)
                     .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
             )
-//            Column(
-//                Modifier
-//                    .padding(4.dp)
-//            ) {
             Text(
                 text = speciesName.speciesName,
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.Bold
             )
-//                Text(
-//                    text = speciesName.harvestType,
-//                    style = MaterialTheme.typography.body2,
-//                    fontWeight = FontWeight.Normal
-//                )
-//
-//                speciesName.habitatImpacts?.let {
-//                    Text(
-//                        text = it,
-//                        style = MaterialTheme.typography.body2,
-//                        fontWeight = FontWeight.Normal
-//                    )
-//                }
-//            }
         }
     }
 }
-
-//@Composable
-//fun FishRow(
-//    rowIndex: Int,
-//    navController: NavController,
-//    speciesName: List<SpeciesResponse>
-//) {
-//    Column {
-//        Row {
-//            Fish(
-//                navController = navController,
-//                speciesName = speciesName[rowIndex * 2]
-//            )
-//            Spacer(modifier = Modifier.width(16.dp))
-//            if (speciesName.size >= rowIndex * 2 + 2) {
-//                Fish(
-//                    navController = navController,
-//                    speciesName = speciesName[rowIndex * 2]
-//                )
-//            } else {
-//                Spacer(modifier = Modifier.weight(1f))
-//            }
-//        }
-//    }
-//}
 
 @Composable
 fun FishList(
@@ -161,7 +121,8 @@ fun FishList(
         itemsIndexed(items = listOfFish) { index, item ->
             Fish(
                 navController = navController,
-                speciesName = item)
+                speciesName = item
+            )
         }
     }
 }

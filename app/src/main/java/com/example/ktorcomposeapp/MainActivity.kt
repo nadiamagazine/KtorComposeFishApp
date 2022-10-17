@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.ktorcomposeapp.model.SpeciesResponse
 import com.example.ktorcomposeapp.ui.theme.KtorComposeAppTheme
 import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
 import kotlinx.coroutines.launch
@@ -30,7 +31,10 @@ class MainActivity : ComponentActivity() {
                     startDestination = "SpeciesListScreen"
                 ) {
                     composable("SpeciesListScreen/{SpeciesResponse}") {
-                        SpeciesListScreen(navController, viewModel)
+                        SpeciesListScreen(
+                            navController = navController,
+                            viewModel
+                        )
                     }
                     composable("SpeciesDetailScreen/{speciesName}",
                         arguments = listOf(
@@ -42,6 +46,11 @@ class MainActivity : ComponentActivity() {
                     ) {
                         val speciesName = remember {
                             it.arguments?.getString("speciesName")
+                        }
+                        if (speciesName != null) {
+                            SpeciesDetailScreen(
+                                speciesName = SpeciesResponse(speciesName)
+                            )
                         }
                     }
                 }
