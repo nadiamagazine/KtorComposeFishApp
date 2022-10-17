@@ -27,12 +27,12 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = "species_list_screen"
+                    startDestination = "SpeciesListScreen"
                 ) {
-                    composable("species_list_screen/{SpeciesResponse}") {
+                    composable("SpeciesListScreen/{SpeciesResponse}") {
                         SpeciesListScreen(navController, viewModel)
                     }
-                    composable("species_detail_screen",
+                    composable("SpeciesDetailScreen/{speciesName}",
                         arguments = listOf(
                             navArgument("speciesName")
                             {
