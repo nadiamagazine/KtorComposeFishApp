@@ -11,7 +11,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.ktorcomposeapp.model.SpeciesResponse
 import com.example.ktorcomposeapp.ui.theme.KtorComposeAppTheme
 import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
 import kotlinx.coroutines.launch
@@ -49,7 +48,7 @@ class MainActivity : ComponentActivity() {
                         }
                         if (speciesName != null) {
                             SpeciesDetailScreen(
-                                speciesName = SpeciesResponse(speciesName)
+                                TODO()
                             )
                         }
                     }

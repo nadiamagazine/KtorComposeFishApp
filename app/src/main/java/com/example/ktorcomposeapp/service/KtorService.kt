@@ -1,6 +1,6 @@
 package com.example.ktorcomposeapp.service
 
-import com.example.ktorcomposeapp.model.SpeciesResponse
+import com.example.ktorcomposeapp.model.SpeciesNameAndImage
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -10,7 +10,7 @@ import kotlinx.serialization.json.Json
 
 interface KtorService {
 
-    suspend fun getListOfSpeciesNames(): List<SpeciesResponse>
+    suspend fun getListOfSpeciesNames(): List<SpeciesNameAndImage>
 
     companion object {
 

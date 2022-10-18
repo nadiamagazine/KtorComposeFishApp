@@ -1,6 +1,6 @@
 package com.example.ktorcomposeapp.service
 
-import com.example.ktorcomposeapp.model.SpeciesResponse
+import com.example.ktorcomposeapp.model.SpeciesNameAndImage
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
@@ -11,7 +11,7 @@ class KtorServiceImplementation(
     private val client: HttpClient
 ): KtorService {
 
-    override suspend fun getListOfSpeciesNames(): List<SpeciesResponse> {
+    override suspend fun getListOfSpeciesNames(): List<SpeciesNameAndImage> {
         return try {
             client.get("https://www.fishwatch.gov/api/species").body()
         } catch(e: RedirectResponseException) {

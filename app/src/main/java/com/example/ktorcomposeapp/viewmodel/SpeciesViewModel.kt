@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ktorcomposeapp.model.SpeciesResponse
+import com.example.ktorcomposeapp.model.SpeciesNameAndImage
 import com.example.ktorcomposeapp.service.KtorService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,12 +13,12 @@ import kotlinx.coroutines.withContext
 
 class SpeciesViewModel : ViewModel() {
 
-    private var cachedSpeciesList = listOf<SpeciesResponse>()
+    private var cachedSpeciesList = listOf<SpeciesNameAndImage>()
     private var isSearchStarting = true
     var isSearching = mutableStateOf(false)
 
-    private var _liveData = MutableLiveData<List<SpeciesResponse>>()
-    val liveData: LiveData<List<SpeciesResponse>> = _liveData
+    private var _liveData = MutableLiveData<List<SpeciesNameAndImage>>()
+    val liveData: LiveData<List<SpeciesNameAndImage>> = _liveData
 
     fun getSpeciesName() = viewModelScope.launch {
         withContext(Dispatchers.IO) {

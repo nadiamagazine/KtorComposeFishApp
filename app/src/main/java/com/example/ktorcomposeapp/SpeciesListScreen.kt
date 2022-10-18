@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.ktorcomposeapp.model.SpeciesResponse
+import com.example.ktorcomposeapp.model.SpeciesNameAndImage
 import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
 
 @Composable
@@ -72,7 +72,7 @@ internal fun SpeciesListScreen(
 @Composable
 fun Fish(
     navController: NavController,
-    speciesName: SpeciesResponse
+    speciesName: SpeciesNameAndImage
 ) {
     Card(
         modifier = Modifier
@@ -115,7 +115,7 @@ fun Fish(
 @Composable
 fun FishList(
     navController: NavController,
-    listOfFish: List<SpeciesResponse>
+    listOfFish: List<SpeciesNameAndImage>
 ) {
     LazyColumn {
         itemsIndexed(items = listOfFish) { index, item ->
