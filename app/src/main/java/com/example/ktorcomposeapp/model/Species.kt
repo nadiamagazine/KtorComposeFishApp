@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SpeciesNameAndImage(
     @SerialName("Species Name") val speciesName: String,
+    @SerialName("Scientific Name") val scientificName: String,
     @SerialName("Species Illustration Photo") val speciesIllustrationPhoto: SpeciesIllustrationImage?
 )
 

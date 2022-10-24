@@ -86,7 +86,7 @@ fun Fish(
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp
     ) {
-        Column(
+        Row(
             Modifier
                 .padding(4.dp)
                 .fillMaxSize()
@@ -103,14 +103,23 @@ fun Fish(
                     .size(85.dp)
                     .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
             )
-            Text(
-                text = speciesName.speciesName,
-                style = MaterialTheme.typography.body1,
-                fontWeight = FontWeight.Bold
-            )
+
+            Column {
+                Text(
+                    text = speciesName.speciesName,
+                    style = MaterialTheme.typography.body1,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = speciesName.scientificName,
+                    style = MaterialTheme.typography.body2,
+                    fontWeight = FontWeight.Light
+                )
+            }
         }
     }
 }
+
 
 @Composable
 fun FishList(
