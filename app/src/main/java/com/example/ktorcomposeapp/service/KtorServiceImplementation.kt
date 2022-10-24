@@ -1,5 +1,6 @@
 package com.example.ktorcomposeapp.service
 
+import com.example.ktorcomposeapp.model.SpeciesDetailedInfo
 import com.example.ktorcomposeapp.model.SpeciesNameAndImage
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -9,24 +10,24 @@ import timber.log.Timber
 
 class KtorServiceImplementation(
     private val client: HttpClient
-): KtorService {
+) : KtorService {
 
     override suspend fun getListOfSpeciesNames(): List<SpeciesNameAndImage> {
         return try {
             client.get("https://www.fishwatch.gov/api/species").body()
-        } catch(e: RedirectResponseException) {
+        } catch (e: RedirectResponseException) {
             // 3xx - responses
             Timber.d("Error: ${e.response.status.description}")
             emptyList()
-        } catch(e: ClientRequestException) {
+        } catch (e: ClientRequestException) {
             // 4xx - responses
             Timber.d("Error: ${e.response.status.description}")
             emptyList()
-        } catch(e: ServerResponseException) {
+        } catch (e: ServerResponseException) {
             // 5xx - responses
             Timber.d("Error: ${e.response.status.description}")
             emptyList()
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             Timber.d("Error: ${e.message}")
             emptyList()
         }

@@ -1,4 +1,8 @@
 package com.example.ktorcomposeapp.viewmodel
 
-class SpeciesDetailViewModel {
+import androidx.lifecycle.ViewModel
+
+class SpeciesDetailViewModel : ViewModel() {
+
+
 }
