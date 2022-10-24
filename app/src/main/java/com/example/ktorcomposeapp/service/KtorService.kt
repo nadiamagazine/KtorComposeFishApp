@@ -13,6 +13,8 @@ interface KtorService {
 
     suspend fun getListOfSpeciesNames(): List<SpeciesNameAndImage>
 
+    suspend fun getSpeciesDetailedInfo(speciesName: String): List<SpeciesDetailedInfo>
+
     companion object {
 
         fun create(): KtorService {

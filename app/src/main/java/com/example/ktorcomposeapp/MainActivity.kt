@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.remember
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -29,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = "SpeciesListScreen"
                 ) {
-                    composable("SpeciesListScreen/{SpeciesResponse}") {
+                    composable("SpeciesListScreen") {
                         SpeciesListScreen(
                             navController = navController,
                             viewModel
@@ -43,12 +42,11 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     ) {
-                        val speciesName = remember {
+                        val speciesName =
                             it.arguments?.getString("speciesName")
-                        }
                         if (speciesName != null) {
                             SpeciesDetailScreen(
-                                TODO()
+                                speciesName
                             )
                         }
                     }

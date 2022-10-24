@@ -11,26 +11,26 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.example.ktorcomposeapp.model.SpeciesDetailedInfo
 import com.example.ktorcomposeapp.viewmodel.SpeciesDetailViewModel
 
+// 1. Pass the DetailViewModel to this screen
+//2. From this viewModel call the new endpoint (take in speciesName)
 @Composable
 fun SpeciesDetailScreen(
     speciesName: String,
-    navController: NavController,
     viewModel: SpeciesDetailViewModel
 ) {
 
-//    val viewState = viewModel.liveData.observeAsState()
+   val viewState = viewModel.liveData.observeAsState()
 //
 //    viewState.value?.let {
 //        SpeciesDetailedInformation(
-//            speciesDetailedInfo =
+//            speciesDetailedInfo = it.first()
 //        )
 //    }
+    Text(text = speciesName)
 }
-
 @Composable
 fun SpeciesDetailedInformation(
     speciesDetailedInfo: SpeciesDetailedInfo

@@ -32,4 +32,25 @@ class KtorServiceImplementation(
             emptyList()
         }
     }
+
+   override suspend fun getSpeciesDetailedInfo(speciesName: String): List<SpeciesDetailedInfo> {
+       return try {
+           client.get("https://www.fishwatch.gov/api/species/${speciesName.lowercase().replace(" ", "-")}").body()
+       } catch (e: RedirectResponseException) {
+           // 3xx - responses
+           Timber.d("Error: ${e.response.status.description}")
+           emptyList()
+       } catch (e: ClientRequestException) {
+           // 4xx - responses
+           Timber.d("Error: ${e.response.status.description}")
+           emptyList()
+       } catch (e: ServerResponseException) {
+           // 5xx - responses
+           Timber.d("Error: ${e.response.status.description}")
+           emptyList()
+       } catch (e: Exception) {
+           Timber.d("Error: ${e.message}")
+           emptyList()
+       }
+   }
 }
