@@ -7,28 +7,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.ktorcomposeapp.model.SpeciesDetailedInfo
+import com.example.ktorcomposeapp.viewmodel.SpeciesDetailViewModel
 
 // 1. Pass the DetailViewModel to this screen
 //2. From this viewModel call the new endpoint (take in speciesName)
 @Composable
 fun SpeciesDetailScreen(
     speciesName: String,
- //   viewModel: SpeciesDetailViewModel
+    viewModel: SpeciesDetailViewModel
 ) {
 
- //  val viewState = viewModel.liveData.observeAsState()
-//
-//    viewState.value?.let {
-//        SpeciesDetailedInformation(
-//            speciesDetailedInfo = it.first()
-//        )
-//    }
-    Text(text = speciesName)
+    val viewState = viewModel.liveData.observeAsState()
+
+    viewState.value?.let {
+        SpeciesDetailedInformation(
+            speciesDetailedInfo = it.first()
+        )
+    }
 }
+
 @Composable
 fun SpeciesDetailedInformation(
     speciesDetailedInfo: SpeciesDetailedInfo

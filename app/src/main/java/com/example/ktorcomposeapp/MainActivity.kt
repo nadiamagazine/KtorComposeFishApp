@@ -11,12 +11,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.ktorcomposeapp.ui.theme.KtorComposeAppTheme
+import com.example.ktorcomposeapp.viewmodel.SpeciesDetailViewModel
 import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
     private val viewModel: SpeciesViewModel by viewModels()
+    private val viewModelDetails: SpeciesDetailViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +48,8 @@ class MainActivity : ComponentActivity() {
                             it.arguments?.getString("speciesName")
                         if (speciesName != null) {
                             SpeciesDetailScreen(
-                                speciesName
+                                speciesName,
+                                viewModelDetails
                             )
                         }
                     }
@@ -56,6 +59,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             viewModel.getSpeciesName()
         }
+
         Timber.plant(Timber.DebugTree())
     }
 }
