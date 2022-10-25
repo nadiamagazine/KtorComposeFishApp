@@ -104,7 +104,12 @@ fun Fish(
                     .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
             )
 
-            Column {
+            Column(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .fillMaxSize()
+                    .align(Alignment.CenterVertically)
+            ) {
                 Text(
                     text = speciesName.speciesName,
                     style = MaterialTheme.typography.body1,
@@ -112,7 +117,7 @@ fun Fish(
                 )
                 Text(
                     text = speciesName.scientificName,
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.subtitle1,
                     fontWeight = FontWeight.Light
                 )
             }
