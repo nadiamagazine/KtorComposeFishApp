@@ -96,7 +96,7 @@ fun Fish(
                     .data(speciesName.speciesIllustrationPhoto?.src)
                     .crossfade(true)
                     .build(),
-                placeholder = painterResource(R.drawable.ic_launcher_foreground),
+                placeholder = painterResource(R.mipmap.ic_launcher_foreground),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(8.dp)
