@@ -60,6 +60,10 @@ class MainActivity : ComponentActivity() {
             viewModel.getSpeciesName()
         }
 
+        lifecycleScope.launch {
+            viewModelDetails.getSpeciesDetailedInfo(speciesName = "")
+        }
+
         Timber.plant(Timber.DebugTree())
     }
 }
