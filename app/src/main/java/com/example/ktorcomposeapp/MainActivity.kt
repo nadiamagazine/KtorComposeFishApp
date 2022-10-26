@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                             it.arguments?.getString("speciesName")
                         if (speciesName != null) {
                             SpeciesDetailScreen(
-                                speciesName,
+                                speciesName = speciesName,
                                 viewModelDetails
                             )
                         }
@@ -58,10 +58,6 @@ class MainActivity : ComponentActivity() {
         }
         lifecycleScope.launch {
             viewModel.getSpeciesName()
-        }
-
-        lifecycleScope.launch {
-            viewModelDetails.getSpeciesDetailedInfo(speciesName = "")
         }
 
         Timber.plant(Timber.DebugTree())

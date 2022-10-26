@@ -18,7 +18,7 @@ class SpeciesDetailViewModel : ViewModel() {
         fun getSpeciesDetailedInfo(speciesName: String) =  viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val listOfSpecies =
-                    KtorService.create().getSpeciesDetailedInfo(speciesName = "Red Snapper")
+                    KtorService.create().getSpeciesDetailedInfo(speciesName = speciesName)
                 _liveData.postValue(listOfSpecies)
             }
         }

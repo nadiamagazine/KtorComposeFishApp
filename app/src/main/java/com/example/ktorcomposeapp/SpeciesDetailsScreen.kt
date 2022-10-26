@@ -14,8 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.example.ktorcomposeapp.model.SpeciesDetailedInfo
 import com.example.ktorcomposeapp.viewmodel.SpeciesDetailViewModel
 
-// 1. Pass the DetailViewModel to this screen
-//2. From this viewModel call the new endpoint (take in speciesName)
 @Composable
 fun SpeciesDetailScreen(
     speciesName: String,
@@ -23,6 +21,7 @@ fun SpeciesDetailScreen(
 ) {
 
     val viewState = viewModel.liveData.observeAsState()
+    viewModel.getSpeciesDetailedInfo(speciesName)
 
     viewState.value?.let {
         SpeciesDetailedInformation(
