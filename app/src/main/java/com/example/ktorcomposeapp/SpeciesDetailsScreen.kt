@@ -46,17 +46,12 @@ fun SpeciesDetailedInformation(
     ) {
         Column(
             Modifier
-
                 .padding(4.dp)
                 .fillMaxSize()
-        ) {
-            Column(
-                Modifier
-                    .padding(4.dp)
             ) {
                 Text(
                     text = speciesDetailedInfo.speciesName,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.h3,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
@@ -67,7 +62,7 @@ fun SpeciesDetailedInformation(
                 speciesDetailedInfo.habitatImpacts?.let {
                     Text(
                         text = it,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.subtitle1,
                         fontWeight = FontWeight.Normal
                     )
                 }
@@ -78,7 +73,7 @@ fun SpeciesDetailedInformation(
                 )
                 Text(
                     text = speciesDetailedInfo.biology,
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.h5,
                     fontWeight = FontWeight.Normal
                 )
                 Text(
@@ -89,4 +84,3 @@ fun SpeciesDetailedInformation(
             }
         }
     }
-}
