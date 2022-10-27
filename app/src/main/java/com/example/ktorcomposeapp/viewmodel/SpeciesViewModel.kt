@@ -51,4 +51,5 @@ class SpeciesViewModel : ViewModel() {
             isSearching.value = true
         }
     }
+
 }
