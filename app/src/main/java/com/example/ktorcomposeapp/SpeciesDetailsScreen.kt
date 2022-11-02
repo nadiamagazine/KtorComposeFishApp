@@ -24,11 +24,11 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 
 @Composable
 fun SpeciesDetailScreen(
-    speciesName: String
+    speciesName: String,
+    viewModel: SpeciesDetailViewModel = viewModel(factory = viewModelFactory {
+    SpeciesDetailViewModel(speciesName)
+})
 ) {
-    val viewModel: SpeciesDetailViewModel by viewModel(factory = viewModelFactory {
-        SpeciesDetailViewModel(speciesName)
-    })
 
     val viewState = viewModel.liveData.observeAsState()
 
