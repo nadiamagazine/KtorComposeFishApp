@@ -3,21 +3,15 @@ package com.example.ktorcomposeapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.ktorcomposeapp.ui.theme.KtorComposeAppTheme
-import com.example.ktorcomposeapp.viewmodel.SpeciesDetailViewModel
-import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: SpeciesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +23,7 @@ class MainActivity : ComponentActivity() {
                     startDestination = "SpeciesListScreen"
                 ) {
                     composable("SpeciesListScreen") {
-                        SpeciesListScreen(
-                            navController = navController,
-                            viewModel
-                        )
+                        SpeciesListScreen(navController = navController)
                     }
                     composable("SpeciesDetailScreen/{speciesName}",
                         arguments = listOf(
@@ -45,18 +36,12 @@ class MainActivity : ComponentActivity() {
                         val speciesName =
                             it.arguments?.getString("speciesName")
                         if (speciesName != null) {
-                            SpeciesDetailScreen(
-                                speciesName = speciesName
-                            )
+                            SpeciesDetailScreen(speciesName = speciesName)
                         }
                     }
                 }
             }
         }
-        lifecycleScope.launch {
-            viewModel.getSpeciesName()
-        }
-
         Timber.plant(Timber.DebugTree())
     }
 }
