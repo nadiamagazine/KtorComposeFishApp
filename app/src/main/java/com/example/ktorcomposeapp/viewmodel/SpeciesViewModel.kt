@@ -16,11 +16,13 @@ class SpeciesViewModel : ViewModel() {
     private var cachedSpeciesList = listOf<SpeciesNameAndImage>()
     private var isSearchStarting = true
     var isSearching = mutableStateOf(false)
-    var success = true
-    var error = true
 
     private var _liveData = MutableLiveData<List<SpeciesNameAndImage>>()
     val liveData: LiveData<List<SpeciesNameAndImage>> = _liveData
+
+    init {
+        getSpeciesName()
+    }
 
     fun getSpeciesName() = viewModelScope.launch {
         withContext(Dispatchers.IO) {
@@ -31,7 +33,7 @@ class SpeciesViewModel : ViewModel() {
 
     //update filter fun
     fun filterListOfSpecies(query: String) {
-       val listToSearch = if(isSearchStarting) {
+       val listToSearch = if (isSearchStarting) {
            _liveData.value
        } else {
            cachedSpeciesList

@@ -39,11 +39,12 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.ktorcomposeapp.model.SpeciesNameAndImage
 import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 internal fun SpeciesListScreen(
     navController: NavController,
-    viewModel: SpeciesViewModel
+    viewModel: SpeciesViewModel = viewModel()
 ) {
     val viewState = viewModel.liveData.observeAsState()
 
@@ -63,11 +64,17 @@ internal fun SpeciesListScreen(
             SearchField {
                 viewModel.filterListOfSpecies(it)
             }
+
             viewState.value?.let {
-                FishList(
-                    navController = navController,
-                    listOfFish = it
-                )
+                if (it.isNotEmpty()) {
+                    FishList(
+                        navController = navController,
+                        listOfFish = it
+                    )
+                } else {
+                    ErrorHandlingMessage()
+                }
+
             }
         }
     }
