@@ -1,7 +1,5 @@
 package com.example.ktorcomposeapp
 
-import androidx.activity.viewModels
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,31 +15,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ktorcomposeapp.model.SpeciesDetailedInfo
 import com.example.ktorcomposeapp.viewmodel.SpeciesDetailViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.viewmodel.viewModelFactory
 
 @Composable
 fun SpeciesDetailScreen(
     speciesName: String,
-    viewModel: SpeciesDetailViewModel = viewModel(factory = viewModelFactory {
-    SpeciesDetailViewModel(speciesName)
-})
+    viewModel: SpeciesDetailViewModel = viewModel(
+        factory =
+        SpeciesDetailViewModel.factory(speciesName)
+    )
 ) {
 
     val viewState = viewModel.liveData.observeAsState()
 
-    Crossfade(targetState = viewModel) { viewModel ->
-        if (viewModel.success) {
+    if (viewState.value == null) {
+        ProgressIndicator()
+    } else {
             viewState.value?.let {
-                SpeciesDetailedInformation(
-                    speciesDetailedInfo = it.first()
-                )
+                if (it.isNotEmpty()) {
+                    SpeciesDetailedInformation(
+                        speciesDetailedInfo = it.first()
+                    )
+                } else {
+                    ErrorHandlingMessage()
+                }
             }
-        } else {
-            ErrorHandlingMessage()
-        }
     }
 }
 
@@ -99,27 +99,3 @@ fun SpeciesDetailedInformation(
         }
     }
 }
-
-//@Composable
-//fun StatesOfDetailScreenWrapper(
-//    speciesInfo: StatesOfDetailScreen<SpeciesDetailedInfo>,
-//    modifier: Modifier = Modifier,
-//    loadingModifier: Modifier = Modifier
-//) {
-//    when(speciesInfo) {
-//        is StatesOfDetailScreen.Success -> {}
-//        is StatesOfDetailScreen.Error -> {
-//            Text(
-//                text = speciesInfo.message!!,
-//                color = Color.Red,
-//                modifier = modifier
-//            )
-//        }
-//        is StatesOfDetailScreen.Loading -> {
-//            CircularProgressIndicator(
-//                color = MaterialTheme.colors.primary,
-//                modifier = loadingModifier
-//            )
-//        }
-//    }
-//}
