@@ -4,6 +4,7 @@ import com.example.ktorcomposeapp.model.SpeciesDetailedInfo
 import com.example.ktorcomposeapp.model.SpeciesNameAndImage
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
@@ -30,6 +31,9 @@ interface KtorService {
                             ignoreUnknownKeys = true
                         }
                         )
+                    }
+                    install(HttpTimeout) {
+                        requestTimeoutMillis = 50000
                     }
                 }
             )
