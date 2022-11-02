@@ -1,6 +1,8 @@
 package com.example.ktorcomposeapp
 
+import androidx.activity.viewModels
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,20 +14,23 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.ktorcomposeapp.model.SpeciesDetailedInfo
 import com.example.ktorcomposeapp.viewmodel.SpeciesDetailViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 
 @Composable
 fun SpeciesDetailScreen(
-    speciesName: String,
-    viewModel: SpeciesDetailViewModel
-
+    speciesName: String
 ) {
+    val viewModel: SpeciesDetailViewModel by viewModel(factory = viewModelFactory {
+        SpeciesDetailViewModel(speciesName)
+    })
 
     val viewState = viewModel.liveData.observeAsState()
-    viewModel.getSpeciesDetailedInfo(speciesName)
 
     Crossfade(targetState = viewModel) { viewModel ->
         if (viewModel.success) {
@@ -38,7 +43,6 @@ fun SpeciesDetailScreen(
             ErrorHandlingMessage()
         }
     }
-
 }
 
 
@@ -49,6 +53,7 @@ fun SpeciesDetailedInformation(
     val scrollState = rememberScrollState()
     Box(
         modifier = Modifier
+            .background(Color.White)
             .verticalScroll(scrollState)
             .fillMaxSize()
             .padding(bottom = 16.dp)

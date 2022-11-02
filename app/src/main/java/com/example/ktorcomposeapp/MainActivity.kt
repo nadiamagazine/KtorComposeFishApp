@@ -18,8 +18,6 @@ import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
     private val viewModel: SpeciesViewModel by viewModels()
-    private val viewModelDetails: SpeciesDetailViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +46,7 @@ class MainActivity : ComponentActivity() {
                             it.arguments?.getString("speciesName")
                         if (speciesName != null) {
                             SpeciesDetailScreen(
-                                speciesName = speciesName,
-                                viewModelDetails
+                                speciesName = speciesName
                             )
                         }
                     }

@@ -218,3 +218,10 @@ fun SearchField(
         )
     }
 }
+
+@Composable
+fun ErrorHandlingMessage() {
+    Text(
+        text = "Oooops, something went wrong"
+    )
+}

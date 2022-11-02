@@ -10,7 +10,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SpeciesDetailViewModel : ViewModel() {
+//add function to clear details from previous fish
+class SpeciesDetailViewModel(
+    val speciesName: String
+) : ViewModel() {
+
+    init {
+        getSpeciesDetailedInfo(speciesName)
+    }
+
+    var success = true
 
     private var _liveData = MutableLiveData<List<SpeciesDetailedInfo>>()
     val liveData: LiveData<List<SpeciesDetailedInfo>> = _liveData
