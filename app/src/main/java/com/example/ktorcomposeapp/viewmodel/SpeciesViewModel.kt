@@ -24,14 +24,13 @@ class SpeciesViewModel : ViewModel() {
         getSpeciesName()
     }
 
-    fun getSpeciesName() = viewModelScope.launch {
+    private fun getSpeciesName() = viewModelScope.launch {
         withContext(Dispatchers.IO) {
             val listOfSpecies = KtorService.create().getListOfSpeciesNames()
             _liveData.postValue(listOfSpecies)
         }
     }
 
-    //update filter fun
     fun filterListOfSpecies(query: String) {
        val listToSearch = if (isSearchStarting) {
            _liveData.value
