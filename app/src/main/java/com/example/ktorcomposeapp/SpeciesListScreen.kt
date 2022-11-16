@@ -34,17 +34,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.ktorcomposeapp.model.SpeciesNameAndImage
-import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ktorcomposeapp.navigation.RouteNavigator
-import com.example.ktorcomposeapp.viewmodel.SpeciesDetailViewModel
-import com.example.ktorcomposeapp.viewmodel.SpeciesDetailViewModel.Companion.factory
-import okhttp3.internal.platform.android.BouncyCastleSocketAdapter.Companion.factory
-import okhttp3.internal.platform.android.ConscryptSocketAdapter.Companion.factory
+import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
 
 @Composable
 internal fun SpeciesListScreen(
@@ -76,7 +71,7 @@ internal fun SpeciesListScreen(
             viewState.value?.let {
                 if (it.isNotEmpty()) {
                     FishList(
-                        onFishClicked = viewModel::onFishClicked,
+                        onRowClick = viewModel::onFishClicked,
                         listOfFish = it
                     )
                 } else {
@@ -90,7 +85,7 @@ internal fun SpeciesListScreen(
 
 @Composable
 fun Fish(
-    onFishClicked: () -> Unit,
+    onRowClicked: () -> Unit,
     speciesName: SpeciesNameAndImage
 ) {
     Card(
@@ -98,7 +93,7 @@ fun Fish(
             .fillMaxSize()
             .padding(8.dp, 4.dp)
             .clickable {
-                  onFishClicked = onFishClicked
+                  onRowClicked()
             },
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp
@@ -145,13 +140,13 @@ fun Fish(
 
 @Composable
 fun FishList(
-    onFishClicked: () -> Unit,
+    onRowClick: () -> Unit,
     listOfFish: List<SpeciesNameAndImage>
 ) {
     LazyColumn {
         itemsIndexed(items = listOfFish) { index, item ->
             Fish(
-                onFishClicked = onFishClicked,
+                onRowClicked = onRowClick,
                 speciesName = item
             )
         }
