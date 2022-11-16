@@ -1,17 +1,19 @@
 package com.example.ktorcomposeapp.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.ktorcomposeapp.model.SpeciesNameAndImage
+import com.example.ktorcomposeapp.navigation.RouteNavigator
 import com.example.ktorcomposeapp.service.KtorService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SpeciesViewModel : ViewModel() {
+class SpeciesViewModel(
+    routeNavigator: RouteNavigator
+): ViewModel(), RouteNavigator by routeNavigator {
 
     private var cachedSpeciesList = listOf<SpeciesNameAndImage>()
     private var isSearchStarting = true
@@ -54,5 +56,18 @@ class SpeciesViewModel : ViewModel() {
             _liveData.value = result
             isSearching.value = true
         }
+    }
+
+    fun onFishClicked() {
+        navigateToDetailsScreen("")
+    }
+
+    companion object {
+        fun factory(routeNavigator: RouteNavigator): ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer {
+                    SpeciesViewModel(routeNavigator)
+                }
+            }
     }
 }

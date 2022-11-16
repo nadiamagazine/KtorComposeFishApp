@@ -40,11 +40,19 @@ import coil.request.ImageRequest
 import com.example.ktorcomposeapp.model.SpeciesNameAndImage
 import com.example.ktorcomposeapp.viewmodel.SpeciesViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.ktorcomposeapp.navigation.RouteNavigator
+import com.example.ktorcomposeapp.viewmodel.SpeciesDetailViewModel
+import com.example.ktorcomposeapp.viewmodel.SpeciesDetailViewModel.Companion.factory
+import okhttp3.internal.platform.android.BouncyCastleSocketAdapter.Companion.factory
+import okhttp3.internal.platform.android.ConscryptSocketAdapter.Companion.factory
 
 @Composable
 internal fun SpeciesListScreen(
-    navController: NavController,
-    viewModel: SpeciesViewModel = viewModel()
+    routeNavigator: RouteNavigator,
+    viewModel: SpeciesViewModel = viewModel(
+        factory =
+        SpeciesViewModel.factory(routeNavigator)
+    )
 ) {
     val viewState = viewModel.liveData.observeAsState()
 
@@ -68,7 +76,7 @@ internal fun SpeciesListScreen(
             viewState.value?.let {
                 if (it.isNotEmpty()) {
                     FishList(
-                        navController = navController,
+                        onFishClicked = viewModel::onFishClicked,
                         listOfFish = it
                     )
                 } else {
@@ -82,7 +90,7 @@ internal fun SpeciesListScreen(
 
 @Composable
 fun Fish(
-    navController: NavController,
+    onFishClicked: () -> Unit,
     speciesName: SpeciesNameAndImage
 ) {
     Card(
@@ -90,9 +98,7 @@ fun Fish(
             .fillMaxSize()
             .padding(8.dp, 4.dp)
             .clickable {
-                navController.navigate(
-                    "SpeciesDetailScreen/${speciesName.speciesName}"
-                )
+                  onFishClicked = onFishClicked
             },
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp
@@ -139,13 +145,13 @@ fun Fish(
 
 @Composable
 fun FishList(
-    navController: NavController,
+    onFishClicked: () -> Unit,
     listOfFish: List<SpeciesNameAndImage>
 ) {
     LazyColumn {
         itemsIndexed(items = listOfFish) { index, item ->
             Fish(
-                navController = navController,
+                onFishClicked = onFishClicked,
                 speciesName = item
             )
         }
